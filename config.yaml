@@ -1,0 +1,29 @@
+# YOLOv7 配置
+yolo:
+  model_path: 'models/yolov7.pt'
+  conf_thresh: 0.25
+  nms_thresh: 0.45
+  input_size: 640
+  device: 'cpu'  # 使用CPU，没有GPU支持
+
+# DeepSORT 配置
+deepsort:
+  model_path: 'models/deepsort/deep_sort-master/ckpt.t7'
+  max_age: 30
+  n_init: 3
+  nn_budget: 100
+  max_iou_distance: 0.7
+
+# 跟踪配置
+tracking:
+  display: true
+  save_output: false
+  output_path: 'output/'
+  classes_to_track: [0]  # COCO数据集的人类别，根据需要修改
+  track_color_map: true
+
+# 视频输入配置
+video:
+  input_path: 'input/video.mp4'
+  fps: 30
+  codec: 'mp4v'

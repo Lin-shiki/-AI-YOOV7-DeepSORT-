@@ -1,0 +1,73 @@
+# 无人机跟踪算法配置示例
+
+# YOLOv7 目标检测配置
+yolo:
+  model_path: "models/yolov7-tiny.pt"  # 模型路径
+  confidence_threshold: 0.5  # 置信度阈值
+  iou_threshold: 0.45  # IOU阈值
+  device: "cuda"  # 设备，可选: "cuda", "cpu"
+  img_size: 640  # 推理图像尺寸
+  half: true  # 是否使用半精度推理
+
+# DeepSORT 跟踪器配置
+deepsort:
+  model_path: "models/deepsort/deep_sort-master/ckpt.t7"  # ReID模型路径
+  max_dist: 0.2  # 外观描述符距离阈值
+  min_confidence: 0.3  # 最小置信度
+  nms_max_overlap: 0.5  # NMS最大重叠
+  max_iou_distance: 0.7  # 最大IOU距离
+  max_age: 70  # 最大年龄（丢失帧数）
+  n_init: 3  # 初始化帧数
+  nn_budget: 100  # 最近邻预算
+  max_cosine_distance: 0.2  # 最大余弦距离
+
+# 跟踪配置
+tracking:
+  display: true  # 是否显示结果
+  save_output: true  # 是否保存输出视频
+  output_path: "output"  # 输出视频目录
+  classes_to_track: [0]  # 要跟踪的类别ID，0通常表示人，可根据模型调整
+  track_color_map:  # 类别颜色映射
+    0: [0, 0, 255]  # 红色
+    1: [0, 255, 0]  # 绿色
+    2: [255, 0, 0]  # 蓝色
+
+# 视频处理配置
+video:
+  codec: "mp4v"  # 视频编解码器
+  fps: 30  # 输出视频帧率
+  fourcc: "mp4v"  # 四字符代码
+  is_color: true  # 是否为彩色视频
+
+# 单目标跟踪特定配置
+single_target:
+  priority_strategy: "area"  # 目标选择策略: "area", "confidence", "center"
+  confidence_threshold: 0.3  # 单目标模式下的置信度阈值
+  min_size: 30  # 最小目标尺寸
+  max_size: 500  # 最大目标尺寸
+
+# 多目标跟踪特定配置
+multi_target:
+  max_objects: 20  # 最大跟踪目标数
+  track_history_length: 30  # 轨迹历史长度
+  confidence_threshold: 0.25  # 多目标模式下的置信度阈值
+  draw_trajectories: true  # 是否绘制轨迹
+  show_statistics: true  # 是否显示统计信息
+
+# 可视化配置
+visualization:
+  show_detections: true  # 是否显示检测结果
+  show_tracks: true  # 是否显示跟踪结果
+  show_ids: true  # 是否显示ID
+  show_confidence: true  # 是否显示置信度
+  show_fps: true  # 是否显示FPS
+  text_scale: 1.0  # 文本缩放
+  text_thickness: 2  # 文本厚度
+  box_thickness: 2  # 边框厚度
+
+# Mock模式配置（用于测试）
+mock:
+  enabled: false  # 是否启用mock模式
+  mock_detections: true  # 是否使用模拟检测
+  mock_tracks: true  # 是否使用模拟跟踪
+  num_mock_objects: 3  # 模拟对象数量
