@@ -1,0 +1,58 @@
+# 无人机跟踪算法测试配置
+
+# YOLOv7 检测器配置
+yolo:
+  model_path: 'models/yolov7-tiny.pt'
+  confidence_threshold: 0.5
+  iou_threshold: 0.45
+  device: 'cpu'  # 测试时使用CPU以避免GPU依赖
+  img_size: 640
+  half: false
+
+# DeepSORT 跟踪器配置
+deepsort:
+  model_path: 'models/deepsort/deep_sort-master/ckpt.t7'
+  max_dist: 0.2
+  min_confidence: 0.3
+  nms_max_overlap: 0.5
+  max_iou_distance: 0.7
+  max_age: 70
+  n_init: 3
+  nn_budget: 100
+  max_cosine_distance: 0.2
+
+# 跟踪配置
+tracking:
+  display: false  # 测试时不显示
+  save_output: false  # 测试时不保存输出
+  output_path: '../output'  # 输出路径
+  classes_to_track: [0]  # 跟踪人的类别
+  track_color_map:  # 跟踪颜色映射
+    0: [0, 0, 255]  # 红色
+
+# 视频处理配置
+video:
+  codec: 'mp4v'
+  fps: 30
+  width: 640
+  height: 480
+
+# 测试特定配置
+test:
+  use_mock: true  # 使用模拟对象进行测试
+  mock_detections:  # 模拟检测结果
+    - bbox: [100, 100, 100, 100]
+      confidence: 0.9
+      class_id: 0
+    - bbox: [300, 200, 80, 80]
+      confidence: 0.85
+      class_id: 0
+  mock_tracks:  # 模拟跟踪结果
+    - track_id: 1
+      bbox: [102, 102, 100, 100]
+      confidence: 0.9
+      class_id: 0
+    - track_id: 2
+      bbox: [302, 202, 80, 80]
+      confidence: 0.85
+      class_id: 0
